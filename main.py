@@ -12,7 +12,6 @@ from webargs import fields
 FIELD_NAMES = ['job_history', 'company', 'email', 'city', 'country', 'name']
 app = Flask(__name__)
 
-
 def must_match_field_name(value):
     return value in FIELD_NAMES
 
@@ -78,6 +77,20 @@ def search_api(query, field, size, offset):
     }
     return jsonify(body)
 
+
+@app.route("/rowchanged", methods=['post'])
+@use_kwargs({
+    'rowindex': fields.Int(missing=None),
+    'oldvalue': fields.Str(missing=None),
+    'newvalue': fields.Str(missing=None),
+    'data': fields.Dict(missing=None),
+}, location="json")
+def rowchanged(rowindex, oldvalue, newvalue, data):
+    print(f"rowchanged(): row {rowindex}, '{oldvalue}' -> '{newvalue}'")
+    result = {
+        'resultcode': 'OK'
+    }
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run()
