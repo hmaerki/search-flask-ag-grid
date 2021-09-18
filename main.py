@@ -55,7 +55,7 @@ def search():
     'field': fields.Str(missing=None, validate=must_match_field_name),
     'size': fields.Int(missing=20),
     'offset': fields.Int(missing=0)
-})
+}, location="query")
 def search_api(query, field, size, offset):
     # File used in this example instead of further API call
     # or database connection
